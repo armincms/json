@@ -1,0 +1,33 @@
+{
+    "name": "armincms/json",
+    "description": "A Laravel Nova field.",
+    "keywords": [
+        "laravel",
+        "nova",
+        "armincms",
+        "json",
+        "field",
+        "array",
+        "collection"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Armincms\\Json\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [ 
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
