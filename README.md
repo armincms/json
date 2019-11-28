@@ -1,6 +1,5 @@
-# Nova Tab
-
-Field's Grouping by the tab.
+# json
+A laravel nova field 
 
 ##### Table of Contents   
 * [Install](#install)      
@@ -108,4 +107,4 @@ If you want store fields in one column but show in a separate place; you should 
 ``` 
 
 
-### ATTENTION: at this situation, you should use `saveHistory` for next `Json` field.
+### ATTENTION: at this situation, you should use `saveHistory` for next `Json` field. 

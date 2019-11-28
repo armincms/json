@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /.idea
 /vendor
 /node_modules
@@ -8,3 +9,25 @@ phpunit.xml
 .phpunit.result.cache
 .DS_Store
 Thumbs.db
+=======
+vendor/
+node_modules/
+npm-debug.log
+
+# Laravel 4 specific
+bootstrap/compiled.php
+app/storage/
+
+# Laravel 5 & Lumen specific
+public/storage
+public/hot
+storage/*.key
+.env.*.php
+.env.php
+.env
+Homestead.yaml
+Homestead.json
+
+# Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
+.rocketeer/
+>>>>>>> 7d8d677ca0ccc3c80571451ae6c556f1f136e8f9
