@@ -7,6 +7,7 @@ A laravel nova field
 * [Nested Usage](#nested-usage)       
 * [Last Values](#last-values)       
 * [Separated Data](#separated-data)       
+* [Fill The Value](#fill-the-value)       
 
 ## Install
 ```bash
@@ -108,3 +109,30 @@ If you want store fields in one column but show in a separate place; you should 
 
 
 * ATTENTION: at this situation, you should use `saveHistory` for next `Json` field. 
+
+
+## Fill The Value
+if you want to store the customized value of the field; you can use the `fillUsing` 
+method and return custom value. see the follow:
+
+* `fillUsing` accept three argumnets `$request`, `$attribute`, `$requestAttribute`.
+
+```  
+  use Armincms\Json\Json;  
+  
+
+  Json::make("ColumnName", [ 
+       Number::make(__("Discount Value"), "value")
+            ->rules("min:0")
+            ->withMeta([
+                'min' => 0
+            ])->fillUsing(function($request, $attribute, $requestAttribute) {
+                if($request->exists($requestAttribute)) { 
+                    return $request[$requestAttribute];
+                }
+
+                return 1000;
+            }), 
+  ]),
+  
+```
