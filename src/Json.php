@@ -58,6 +58,28 @@ class Json extends MergeValue
     } 
 
     /**
+     * Resolve method for unsing field in action.
+     * 
+     * @return void
+     */
+    public function resolve()
+    {
+        
+    }
+
+    /**
+     * Get available fields.
+     * 
+     * @return array
+     */
+    public function fields()
+    {
+        return collect($this->data)->map(function($field) {
+            return $field instanceof self ? $field->fields() : [$field];
+        })->flatten()->all();
+    }
+
+    /**
      * Create a new element.
      *
      * @return static
@@ -103,7 +125,7 @@ class Json extends MergeValue
      */
     public function prepareJsonFields(self $json)
     { 
-        $fields = collect($json->data)->each(function($field) use ($json) {  
+        $fields = collect($json->fields())->each(function($field) use ($json) {  
             $field->fillUsing($json->fillCallbacks[$field->attribute] ?? null);
         }); 
 
@@ -188,7 +210,7 @@ class Json extends MergeValue
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return $this       
      */
-    public function cleanHistory(Model $model) : self
+    public function cleanHistory($model) : self
     { 
         $model->{$this->name} = null;
 

@@ -5,6 +5,7 @@ A laravel nova field
 * [Install](#install)      
 * [Usage](#usage)       
 * [Nested Usage](#nested-usage)       
+* [Action Usage](#action-usage)       
 * [Last Values](#last-values)       
 * [Separated Data](#separated-data)       
 * [Fill The Value](#fill-the-value)       
@@ -70,6 +71,61 @@ Storing nested data is very like straight data. just like the following; use the
             ]),   
       ]),
   ]),
+
+```
+
+## Action Usage 
+It is possible to use the `Json` in the `Action` like follow:
+
+
+
+```  
+use Armincms\Json\Json;
+
+class UpdateTime extends Action
+{
+    use InteractsWithQueue, Queueable, SerializesModels; 
+
+
+    /**
+     * Perform the action on the given models.
+     *
+     * @param  \Laravel\Nova\Fields\ActionFields  $fields
+     * @param  \Illuminate\Support\Collection  $models
+     * @return mixed
+     */
+    public function handle(ActionFields $fields, Collection $models)
+    {
+      //
+    }
+
+
+    /**
+     * Get the fields available on the action.
+     *
+     * @return array
+     */
+    public function fields()
+    {
+        return collect([
+            /// some fields
+            
+            Json::make(mb_strtolower($meal), [
+                Text::make(__("From"), 'from')->rules('required'),
+                Text::make(__("Until"), 'until')->rules('required'),  
+                Json::make(mb_strtolower($meal), [
+                    Text::make(__("From"), 'from'),
+                    Text::make(__("Until"), 'until'),  
+                ]),
+            ]),
+
+            /// some fields
+        ])->map(function($field) {
+            return $field instanceof Json ? $field->fields() : [$field];
+        })->flatten()->all();
+    }
+}
+
 
 ```
 
