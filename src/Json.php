@@ -288,5 +288,15 @@ class Json extends MergeValue
     protected function isJsonCastable($model)
     {
         return $model->hasCast($this->name, ['array', 'json', 'object', 'collection']);
-    } 
+    }  
+
+    /**
+     * Convert Json to array of fields.
+     *
+     * @return array
+     */
+    public function toArray() : array
+    {
+        return (array) $this->fields();
+    }
 }
