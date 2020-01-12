@@ -8,7 +8,8 @@ A laravel nova field
 * [Action Usage](#action-usage)       
 * [Last Values](#last-values)       
 * [Separated Data](#separated-data)       
-* [Fill The Value](#fill-the-value)       
+* [Fill The Value](#fill-the-value) 
+* [About Implementation](#about-implementation)    
 
 ## Install
 ```bash
@@ -192,3 +193,12 @@ method and return custom value. see the follow:
   ]),
   
 ```
+
+## About Implementation
+Maybe there exists a question about how this package works? 
+
+I Should say that; this package doesn't have any corresponds component to the `Vuejs`. 
+this package just uses `callback`'s for data storing. so; won't changed any field.
+
+with this implementation, you have access to your original fields without changes.
+So; for interacts with other packages or fields, exists `toArray` method to access to defined fields.
