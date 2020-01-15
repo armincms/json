@@ -276,7 +276,7 @@ class Json extends MergeValue
      */
     public function serializeValue($value, $model)
     {   
-        return $this->isJsonCastable($model) ? $value : json_encode($value);  
+        return array_filter($this->isJsonCastable($model) ? $value : json_encode($value));  
     }
 
     /**
