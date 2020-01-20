@@ -1,3 +1,8 @@
+version 0.3.0 (2020-01-20)
+----------------------------- 
+### ADDED
+	- added the `nullable`'s method for `store` or `reject` null values.
+
 version 0.2.0 (2020-01-12)
 ----------------------------- 
 ### ADDED

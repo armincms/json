@@ -8,7 +8,8 @@ A laravel nova field
 * [Action Usage](#action-usage)       
 * [Last Values](#last-values)       
 * [Separated Data](#separated-data)       
-* [Fill The Value](#fill-the-value) 
+* [Fill The Value](#fill-the-value)  
+* [Null Values](#null-values) 
 * [About Implementation](#about-implementation)    
 
 ## Install
@@ -193,6 +194,10 @@ method and return custom value. see the follow:
   ]),
   
 ```
+
+## Null Values
+If there need to store some values as the `null`; you can use the `nullable` method that works like the Nova nullable. 
+By default; nullable has the `true` value which means all values will be stored. But; It's possible to reject the storing of null values via passing the `false` value into the `nullable` method.
 
 ## About Implementation
 Maybe there exists a question about how this package works? 
