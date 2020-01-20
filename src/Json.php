@@ -44,6 +44,20 @@ class Json extends MergeValue
     protected $cleanedOut = false;   
 
     /**
+     * Indicates if the field accepting nullable.
+     *
+     * @var bool
+     */
+    public $nullable = true;
+
+    /**
+     * Values which will be replaced to null.
+     *
+     * @var array
+     */
+    public $nullValues = [''];
+
+    /**
      * Create a new json instance.
      *
      * @param  string  $name
@@ -228,14 +242,18 @@ class Json extends MergeValue
      * @param  string $requestAttribute 
      * @return array
      */
-    public function mergeValue($request, $model, $attribute, $requestAttribute) : array
-    { 
-        $key    = str_replace("{$this->separator}", '.', $attribute);
-        $value  = $this->fetchValueFromRequest($request, $attribute, $requestAttribute);
-        $old    = [$this->name => collect($model->{$this->name})->toArray()];
+    protected function mergeValue($request, $model, $attribute, $requestAttribute) : array
+    {   
+        $value = $this->fetchValueFromRequest($request, $attribute, $requestAttribute); 
+        $key   = $this->buildDottedName($attribute); 
+        $old   = $this->old($model);
 
-        return data_set($old, $key, $value)[$this->name];
-    }
+        $data = $this->storable($value) 
+                    ? data_set($old, $key, $this->isNullValue($value) ? null : $value)
+                    : $old; 
+        
+        return $data[$this->name];        
+    } 
 
     /**
      * Fetch the attribute value from request.
@@ -250,6 +268,17 @@ class Json extends MergeValue
         $retriver = $this->getValueRetriever($attribute);  
 
         return $retriver($request, $attribute, $requestAttribute); 
+    } 
+
+    /**
+     * Build dot name from attribute name.
+     *                  
+     * @param  string $attribute         
+     * @return string
+     */
+    public function buildDottedName(string $attribute) : string
+    {
+        return str_replace("{$this->separator}", '.', $attribute);
     }
 
     /**
@@ -265,7 +294,73 @@ class Json extends MergeValue
                 return $request[$requestAttribute];
             }
         };
-    }   
+    }  
+
+    /**
+     * Determine if need to store value.
+     * 
+     * @param  mixed $value [description]
+     * @return bool
+     */ 
+    protected function storable($value) : bool
+    {
+        return $this->nullable || ! $this->isNullValue($value);
+    } 
+
+    /**
+     * Get old stored values.
+     * 
+     * @param  mixed $value [description]
+     * @return bool
+     */
+    protected function old($model)
+    {
+        return [$this->name => collect($model->{$this->name})->toArray()];
+    }
+
+    /**
+     * Indicate that the field should be nullable.
+     *
+     * @param  bool  $nullable
+     * @param  array|Closure  $values
+     * @return $this
+     */
+    public function nullable($nullable = true, $values = null)
+    {
+        $this->nullable = $nullable;
+
+        if ($values !== null) {
+            $this->nullValues($values);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Specify nullable values.
+     *
+     * @param  array|Closure  $values
+     * @return $this
+     */
+    public function nullValues($values)
+    {
+        $this->nullValues = $values;
+
+        return $this;
+    } 
+
+    /**
+     * Check value for null value.
+     *
+     * @param  mixed $value
+     * @return bool
+     */
+    protected function isNullValue($value)
+    { 
+        return is_callable($this->nullValues)
+            ? ($this->nullValues)($value)
+            : in_array($value, (array) $this->nullValues);
+    }
 
     /**
      * Serialize attribute for storing.
