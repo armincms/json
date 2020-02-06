@@ -394,4 +394,24 @@ class Json extends MergeValue
     {
         return (array) $this->fields();
     }
+
+    /**
+     * Handle field show/hide methods.
+     * 
+     * @param  string $method     
+     * @param  array $parameters 
+     * @return $this             
+     */
+    public function __call($method, $parameters)
+    {
+        if(! method_exists(\Laravel\Nova\Fields\FieldElement::class, $method)) { 
+            throw new \BadMethodCallException;
+        }
+
+        foreach ($this->toArray() as $field) {
+            call_user_func_array([$field, $method], $parameters);
+        }
+
+        return $this; 
+    }
 }
