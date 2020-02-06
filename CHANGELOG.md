@@ -1,3 +1,8 @@
+version 0.5.0 (2020-02-06)
+----------------------------- 
+### ADDED
+	- added the magic `__call` method for handle field show/hide.
+
 version 0.4.0 (2020-01-20)
 ----------------------------- 
 ### ADDED
