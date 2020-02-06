@@ -6,6 +6,7 @@ A laravel nova field
 * [Usage](#usage)       
 * [Nested Usage](#nested-usage)       
 * [Action Usage](#action-usage)       
+* [Showing / Hiding Fields](#showing-and-hiding-fields)       
 * [Last Values](#last-values)       
 * [Separated Data](#separated-data)       
 * [Fill The Value](#fill-the-value)  
@@ -130,6 +131,20 @@ class UpdateTime extends Action
 
 
 ```
+## Showing And Hiding Fields
+you can use the field `show/hide` methods on the JSON field. so this method will be called on each field under the `Json` field.The following example will hide all fields from the `index` view.
+
+
+```  
+  use Armincms\Json\Json;  
+  
+
+  Json::make("ColumnName", [ 
+       // fields
+  ])->hideFromIndex(),
+
+``` 
+
 
 ## Save Last Values 
 By default; we clean the last data for store new data. but, it's possible to save the last data. for this, call the `saveHistory`  method on parent `Json` class. this causes us to overwrite the new data without clean the last data. see the follow:
