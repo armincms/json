@@ -414,4 +414,17 @@ class Json extends MergeValue
 
         return $this; 
     }
+    
+    /**
+     * When the panel attached to the translatable field, we'll attach it to fields.
+     * 
+     * @param string $key   
+     * @param mixed $value 
+     */
+    public function __set($key, $value)
+    {  
+        foreach ($this->toArray() as $field) {
+            $field->$key = $value;
+        }
+    }
 }
