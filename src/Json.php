@@ -30,6 +30,13 @@ class Json extends MergeValue
     public $fillCallbacks = [];  
 
     /**
+     * Status of auto casting feature.
+     *
+     * @var bool
+     */
+    protected $autoCasting = true;
+
+    /**
      * Field history status.
      *
      * @var bool
@@ -371,7 +378,7 @@ class Json extends MergeValue
      */
     public function serializeValue($value, $model)
     {   
-        return $this->isJsonCastable($model) ? $value : json_encode($value);  
+        return ! $this->autoCasting || $this->isJsonCastable($model) ? $value : json_encode($value);  
     }
 
     /**
@@ -384,6 +391,19 @@ class Json extends MergeValue
     {
         return $model->hasCast($this->name, ['array', 'json', 'object', 'collection']);
     }  
+
+    /**
+     * Receive if need the result as an array.
+     *
+     * @param  void
+     * @return $this
+     */
+    public function ignoreCasting()
+    {
+        $this->autoCasting = false;
+
+        return $this;
+    }
 
     /**
      * Convert Json to array of fields.
