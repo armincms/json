@@ -11,6 +11,7 @@ A laravel nova field
 * [Separated Data](#separated-data)       
 * [Fill The Value](#fill-the-value)  
 * [Null Values](#null-values) 
+* [Auto Casting](#auto-casting)  
 * [About Implementation](#about-implementation)    
 
 ## Install
@@ -213,6 +214,10 @@ method and return custom value. see the follow:
 ## Null Values
 If there need to store some values as the `null`; you can use the `nullable` method that works like the Nova nullable. 
 By default; nullable has the `true` value which means all values will be stored. But; It's possible to reject the storing of null values via passing the `false` value into the `nullable` method.
+
+## Auto Casting
+If not defined JSON casting for the field attribute; we will convert the field Value into JSON.
+if you need disable this feature; use the `ignoreCasting` method;
 
 ## About Implementation
 Maybe there exists a question about how this package works? 
