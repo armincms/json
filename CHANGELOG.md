@@ -1,3 +1,8 @@
+version 0.6.0 (2020-02-06)
+----------------------------- 
+### ADDED
+	- added `ignoreCasting` method for disable `autoCasting` feature.
+
 version 0.5.0 (2020-02-06)
 ----------------------------- 
 ### ADDED
